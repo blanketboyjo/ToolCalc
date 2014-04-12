@@ -382,7 +382,7 @@ public class ToolCalc extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(picture, javax.swing.GroupLayout.PREFERRED_SIZE, 201, Short.MAX_VALUE)
+                    .addComponent(picture, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
@@ -490,15 +490,15 @@ public class ToolCalc extends javax.swing.JFrame {
         showMainPicture();
     }//GEN-LAST:event_FieldDrillDiaFocusLost
 
-    private void FieldMillDiaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_FieldMillDiaFocusGained
-        m_toolDim   = 2;
-        showMainPicture();
-    }//GEN-LAST:event_FieldMillDiaFocusGained
-
     private void FieldMillDiaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_FieldMillDiaFocusLost
         m_toolDim  = 1;
         showMainPicture();
     }//GEN-LAST:event_FieldMillDiaFocusLost
+
+    private void FieldMillDiaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_FieldMillDiaFocusGained
+        m_toolDim   = 2;
+        showMainPicture();
+    }//GEN-LAST:event_FieldMillDiaFocusGained
 
     private void showMainPicture(){
         if(1 == m_toolType){
