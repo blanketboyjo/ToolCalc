@@ -230,48 +230,56 @@ public class ToolCalc extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCounterboreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCounterboreActionPerformed
-        // TODO add your handling code here:
         btnCenterDrill  .setSelected(false);
         btnCountersink  .setSelected(false);
         btnReamer       .setSelected(false);
-//        btnCounterbore  .setSelected(false);
-        btnDrill        .setSelected(false);
+        btnCounterbore  .setSelected(true);
+        if(btnCounterbore.isSelected()){
+            btnDrill    .setSelected(true);
+        }else{
+            btnDrill    .setSelected(false);
+        }
     }//GEN-LAST:event_btnCounterboreActionPerformed
 
     private void btnCenterDrillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCenterDrillActionPerformed
-        // TODO add your handling code here:
-//        btnCenterDrill  .setSelected(false);
         btnCountersink  .setSelected(false);
         btnReamer       .setSelected(false);
         btnCounterbore  .setSelected(false);
-        btnDrill        .setSelected(false);
+        if(btnCenterDrill.isSelected()){
+            btnDrill    .setSelected(true);
+        }else{
+            btnDrill    .setSelected(false);
+        }
     }//GEN-LAST:event_btnCenterDrillActionPerformed
 
     private void btnCountersinkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCountersinkActionPerformed
-        // TODO add your handling code here:
         btnCenterDrill  .setSelected(false);
-//        btnCountersink  .setSelected(false);
         btnReamer       .setSelected(false);
         btnCounterbore  .setSelected(false);
-        btnDrill        .setSelected(false);
+        if(btnCountersink.isSelected()){
+            btnDrill    .setSelected(true);
+        }else{
+            btnDrill    .setSelected(false);
+        }
     }//GEN-LAST:event_btnCountersinkActionPerformed
 
     private void btnReamerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReamerActionPerformed
-        // TODO add your handling code here:
         btnCenterDrill  .setSelected(false);
         btnCountersink  .setSelected(false);
-//        btnReamer       .setSelected(false);
+
         btnCounterbore  .setSelected(false);
-        btnDrill        .setSelected(false);
+        if(btnReamer.isSelected()){
+            btnDrill    .setSelected(true);
+        }else{
+            btnDrill    .setSelected(false);
+        }
     }//GEN-LAST:event_btnReamerActionPerformed
 
     private void btnDrillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDrillActionPerformed
-        // TODO add your handling code here:
-        btnCenterDrill  .setSelected(false);
+         btnCenterDrill  .setSelected(false);
         btnCountersink  .setSelected(false);
         btnReamer       .setSelected(false);
         btnCounterbore  .setSelected(false);
-//        btnDrill        .setSelected(false);
         picture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/drill/PlainDrill.jpg")));
     }//GEN-LAST:event_btnDrillActionPerformed
 
