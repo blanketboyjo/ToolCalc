@@ -77,10 +77,16 @@
   </Layout>
   <SubComponents>
     <Container class="javax.swing.JTabbedPane" name="container">
+      <Properties>
+        <Property name="focusable" type="boolean" value="false"/>
+      </Properties>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
       <SubComponents>
         <Container class="javax.swing.JPanel" name="panelDrills">
+          <Properties>
+            <Property name="focusable" type="boolean" value="false"/>
+          </Properties>
           <Events>
             <EventHandler event="componentShown" listener="java.awt.event.ComponentListener" parameters="java.awt.event.ComponentEvent" handler="panelDrillsComponentShown"/>
           </Events>
@@ -117,7 +123,7 @@
                               <Component id="FieldDrillDia" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace pref="14" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -130,8 +136,8 @@
             </Component>
             <Component class="javax.swing.JTextField" name="FieldDrillDia">
               <Events>
-                <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="FieldDrillDiaMouseEntered"/>
-                <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="mouseLeftBox"/>
+                <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="FieldDrillDiaFocusGained"/>
+                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="FieldDrillDiaFocusLost"/>
               </Events>
             </Component>
             <Container class="javax.swing.JPanel" name="panelDrillCycle">
@@ -141,6 +147,7 @@
                     <EtchetBorder/>
                   </Border>
                 </Property>
+                <Property name="focusable" type="boolean" value="false"/>
               </Properties>
 
               <Layout>
@@ -187,8 +194,6 @@
                 <Component class="javax.swing.JRadioButton" name="btnDrill">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Drill"/>
-                    <Property name="focusPainted" type="boolean" value="false"/>
-                    <Property name="focusable" type="boolean" value="false"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDrillActionPerformed"/>
@@ -197,8 +202,6 @@
                 <Component class="javax.swing.JRadioButton" name="btnReamer">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Reamer"/>
-                    <Property name="focusPainted" type="boolean" value="false"/>
-                    <Property name="focusable" type="boolean" value="false"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnReamerActionPerformed"/>
@@ -207,8 +210,6 @@
                 <Component class="javax.swing.JRadioButton" name="btnCounterbore">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Counterbore"/>
-                    <Property name="focusPainted" type="boolean" value="false"/>
-                    <Property name="focusable" type="boolean" value="false"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCounterboreActionPerformed"/>
@@ -217,8 +218,6 @@
                 <Component class="javax.swing.JRadioButton" name="btnCountersink">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Countersink"/>
-                    <Property name="focusPainted" type="boolean" value="false"/>
-                    <Property name="focusable" type="boolean" value="false"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCountersinkActionPerformed"/>
@@ -227,8 +226,6 @@
                 <Component class="javax.swing.JRadioButton" name="btnCenterDrill">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Center Drill"/>
-                    <Property name="focusPainted" type="boolean" value="false"/>
-                    <Property name="focusable" type="boolean" value="false"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCenterDrillActionPerformed"/>
@@ -248,6 +245,9 @@
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="panelEndmills">
+          <Properties>
+            <Property name="focusable" type="boolean" value="false"/>
+          </Properties>
           <Events>
             <EventHandler event="componentShown" listener="java.awt.event.ComponentListener" parameters="java.awt.event.ComponentEvent" handler="panelEndmillsComponentShown"/>
           </Events>
@@ -262,7 +262,7 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="442" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="443" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
@@ -436,6 +436,7 @@
         <Component class="javax.swing.JTextField" name="FieldPlungeRate">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
+            <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="BtnCalculate">
