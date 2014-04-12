@@ -19,7 +19,8 @@ public class ToolCalc extends javax.swing.JFrame {
      * 2 = endmills
      */
     private int m_toolType  = 1;
-    /*m_tool
+    
+    /*m_tool (unused my endmill panel
      * 1 = drill
      * 2 = centerdrill
      * 3 = countersink
@@ -69,6 +70,8 @@ public class ToolCalc extends javax.swing.JFrame {
         btnCenterDrill = new javax.swing.JRadioButton();
         LabelDrillCycle = new javax.swing.JLabel();
         panelEndmills = new javax.swing.JPanel();
+        LabeMillDia = new javax.swing.JLabel();
+        FieldMillDia = new javax.swing.JTextField();
         picture = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -221,15 +224,36 @@ public class ToolCalc extends javax.swing.JFrame {
             }
         });
 
+        LabeMillDia.setText("Tool Diameter (Inches)");
+
+        FieldMillDia.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                FieldMillDiaFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                FieldMillDiaFocusLost(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelEndmillsLayout = new javax.swing.GroupLayout(panelEndmills);
         panelEndmills.setLayout(panelEndmillsLayout);
         panelEndmillsLayout.setHorizontalGroup(
             panelEndmillsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 443, Short.MAX_VALUE)
+            .addGroup(panelEndmillsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(LabeMillDia)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(FieldMillDia, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)
+                .addGap(146, 146, 146))
         );
         panelEndmillsLayout.setVerticalGroup(
             panelEndmillsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 178, Short.MAX_VALUE)
+            .addGroup(panelEndmillsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelEndmillsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(LabeMillDia)
+                    .addComponent(FieldMillDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(147, Short.MAX_VALUE))
         );
 
         container.addTab("End Mills", panelEndmills);
@@ -417,7 +441,7 @@ public class ToolCalc extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCountersinkActionPerformed
 
     private void btnReamerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReamerActionPerformed
-        m_tool = 4;
+        m_tool = 5;
         btnCenterDrill  .setSelected(false);
         btnCountersink  .setSelected(false);
         btnCounterbore  .setSelected(false);
@@ -443,10 +467,12 @@ public class ToolCalc extends javax.swing.JFrame {
     private void panelDrillsComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_panelDrillsComponentShown
         m_toolType = 1;
         showMainPicture();
+        FieldPlungeRate.setEnabled(false);
     }//GEN-LAST:event_panelDrillsComponentShown
 
     private void panelEndmillsComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_panelEndmillsComponentShown
         m_toolType = 2;
+        FieldPlungeRate.setEnabled(true);
         showMainPicture();
     }//GEN-LAST:event_panelEndmillsComponentShown
 
@@ -464,6 +490,16 @@ public class ToolCalc extends javax.swing.JFrame {
         showMainPicture();
     }//GEN-LAST:event_FieldDrillDiaFocusLost
 
+    private void FieldMillDiaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_FieldMillDiaFocusGained
+        m_toolDim   = 2;
+        showMainPicture();
+    }//GEN-LAST:event_FieldMillDiaFocusGained
+
+    private void FieldMillDiaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_FieldMillDiaFocusLost
+        m_toolDim  = 1;
+        showMainPicture();
+    }//GEN-LAST:event_FieldMillDiaFocusLost
+
     private void showMainPicture(){
         if(1 == m_toolType){
             if(1 == m_tool){
@@ -478,9 +514,33 @@ public class ToolCalc extends javax.swing.JFrame {
                 }else{
                     picture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/centerdrill/PlainCenterdrill.jpg")));
                 }
+            }else if(3 == m_tool){
+                if(2 == m_toolDim){
+                    picture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/countersink/DiaCountersink.jpg")));
+                }else{
+                    picture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/countersink/PlainCountersink.jpg")));
+                }
+            }else if(4 == m_tool){
+                if(2 == m_toolDim){
+                    picture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/counterbore/DiaCounterbore.jpg")));
+                }else{
+                    picture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/counterbore/PlainCounterbore.jpg")));
+                }
+            }else if(5 == m_tool){
+                if(2 == m_toolDim){
+                    picture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/reamer/DiaReamer.jpg")));
+                }else{
+                    picture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/reamer/PlainReamer.jpg")));
+                }
             }
         }else{
-            picture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/endmill/PlainEndmill.jpg")));
+            if(2 == m_toolDim){
+                picture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/endmill/DiaEndmill.jpg")));
+            }else if(3 == m_toolDim){
+                picture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/endmill/FlutesEndmill.jpg")));
+            }else{
+                picture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/endmill/PlainEndmill.jpg")));
+            }
         }
     }
     /**
@@ -525,7 +585,9 @@ public class ToolCalc extends javax.swing.JFrame {
     private javax.swing.JTextField FieldFeedRate;
     private javax.swing.JTextField FieldFixedRpm;
     private javax.swing.JTextField FieldInitialRpm;
+    private javax.swing.JTextField FieldMillDia;
     private javax.swing.JTextField FieldPlungeRate;
+    private javax.swing.JLabel LabeMillDia;
     private javax.swing.JLabel LabelCalculations;
     private javax.swing.JLabel LabelDrillCycle;
     private javax.swing.JLabel LabelDrillDia;
