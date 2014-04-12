@@ -14,14 +14,38 @@ import java.awt.event.MouseEvent;
  * @author Jordan
  */
 public class ToolCalc extends javax.swing.JFrame {
-
+    /*m_toolType
+     * 1 = drills
+     * 2 = endmills
+     */
+    private int m_toolType  = 1;
+    /*m_tool
+     * 1 = drill
+     * 2 = centerdrill
+     * 3 = countersink
+     * 4 = counterbore
+     * 5 = reamer
+     */
+    private int m_tool      = 1;
+    
+    /*m_toolDim
+     * 1 = normal picture
+     * 2 = diameter
+     * 3 = flutes (only for endmills)
+     */
+    private int m_toolDim   = 1;
+    
     /**
      * Creates new form ToolCalc
      */
     public ToolCalc() {
         initComponents();
+        m_init();
     }
     
+    private void m_init(){
+        showMainPicture();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -32,8 +56,8 @@ public class ToolCalc extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTabbedPane1 = new javax.swing.JTabbedPane();
-        jPanel1 = new javax.swing.JPanel();
+        container = new javax.swing.JTabbedPane();
+        panelDrills = new javax.swing.JPanel();
         LabelDrillDia = new javax.swing.JLabel();
         FieldDrillDia = new javax.swing.JTextField();
         panelDrillCycle = new javax.swing.JPanel();
@@ -42,29 +66,51 @@ public class ToolCalc extends javax.swing.JFrame {
         btnCounterbore = new javax.swing.JRadioButton();
         btnCountersink = new javax.swing.JRadioButton();
         btnCenterDrill = new javax.swing.JRadioButton();
-        jLabel1 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
+        LabelDrillCycle = new javax.swing.JLabel();
+        panelEndmills = new javax.swing.JPanel();
         picture = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        LabelInitialRpm = new javax.swing.JLabel();
+        FieldInitialRpm = new javax.swing.JTextField();
+        LabelFixedRpm = new javax.swing.JLabel();
+        FieldFixedRpm = new javax.swing.JTextField();
+        LabelCalculations = new javax.swing.JLabel();
+        LabelFeedRate = new javax.swing.JLabel();
+        FieldFeedRate = new javax.swing.JTextField();
+        LabelPlungeRate = new javax.swing.JLabel();
+        FieldPlungeRate = new javax.swing.JTextField();
+        BtnCalculate = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Tool Speed Calculator");
         setBackground(new java.awt.Color(255, 255, 255));
         setResizable(false);
 
+        panelDrills.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                panelDrillsComponentShown(evt);
+            }
+        });
+
         LabelDrillDia.setText("Tool Diameter (Inches)");
 
         FieldDrillDia.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                FieldDrillDiaMouseClicked(evt);
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                FieldDrillDiaMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                mouseLeftBox(evt);
             }
         });
 
         panelDrillCycle.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         btnDrill.setText("Drill");
+        btnDrill.setFocusPainted(false);
+        btnDrill.setFocusable(false);
         btnDrill.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDrillActionPerformed(evt);
@@ -72,6 +118,8 @@ public class ToolCalc extends javax.swing.JFrame {
         });
 
         btnReamer.setText("Reamer");
+        btnReamer.setFocusPainted(false);
+        btnReamer.setFocusable(false);
         btnReamer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnReamerActionPerformed(evt);
@@ -79,6 +127,8 @@ public class ToolCalc extends javax.swing.JFrame {
         });
 
         btnCounterbore.setText("Counterbore");
+        btnCounterbore.setFocusPainted(false);
+        btnCounterbore.setFocusable(false);
         btnCounterbore.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCounterboreActionPerformed(evt);
@@ -86,6 +136,8 @@ public class ToolCalc extends javax.swing.JFrame {
         });
 
         btnCountersink.setText("Countersink");
+        btnCountersink.setFocusPainted(false);
+        btnCountersink.setFocusable(false);
         btnCountersink.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCountersinkActionPerformed(evt);
@@ -93,15 +145,17 @@ public class ToolCalc extends javax.swing.JFrame {
         });
 
         btnCenterDrill.setText("Center Drill");
+        btnCenterDrill.setFocusPainted(false);
+        btnCenterDrill.setFocusable(false);
         btnCenterDrill.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCenterDrillActionPerformed(evt);
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel1.setText("Drill Path");
-        jLabel1.setToolTipText("");
+        LabelDrillCycle.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        LabelDrillCycle.setText("Drill Path");
+        LabelDrillCycle.setToolTipText("");
 
         javax.swing.GroupLayout panelDrillCycleLayout = new javax.swing.GroupLayout(panelDrillCycle);
         panelDrillCycle.setLayout(panelDrillCycleLayout);
@@ -116,7 +170,7 @@ public class ToolCalc extends javax.swing.JFrame {
                     .addComponent(btnCenterDrill)
                     .addGroup(panelDrillCycleLayout.createSequentialGroup()
                         .addGap(32, 32, 32)
-                        .addComponent(jLabel1))
+                        .addComponent(LabelDrillCycle))
                     .addComponent(btnCountersink))
                 .addContainerGap(33, Short.MAX_VALUE))
         );
@@ -124,7 +178,7 @@ public class ToolCalc extends javax.swing.JFrame {
             panelDrillCycleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelDrillCycleLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
+                .addComponent(LabelDrillCycle)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnCenterDrill)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -138,45 +192,51 @@ public class ToolCalc extends javax.swing.JFrame {
                 .addGap(12, 12, 12))
         );
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout panelDrillsLayout = new javax.swing.GroupLayout(panelDrills);
+        panelDrills.setLayout(panelDrillsLayout);
+        panelDrillsLayout.setHorizontalGroup(
+            panelDrillsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelDrillsLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(LabelDrillDia)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(FieldDrillDia, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
+                .addComponent(FieldDrillDia, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelDrillCycle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        panelDrillsLayout.setVerticalGroup(
+            panelDrillsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelDrillsLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelDrillsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(panelDrillCycle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addGroup(panelDrillsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(LabelDrillDia)
                         .addComponent(FieldDrillDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Drill Bit", jPanel1);
+        container.addTab("Drill Bit", panelDrills);
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        panelEndmills.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                panelEndmillsComponentShown(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelEndmillsLayout = new javax.swing.GroupLayout(panelEndmills);
+        panelEndmills.setLayout(panelEndmillsLayout);
+        panelEndmillsLayout.setHorizontalGroup(
+            panelEndmillsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 442, Short.MAX_VALUE)
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        panelEndmillsLayout.setVerticalGroup(
+            panelEndmillsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 178, Short.MAX_VALUE)
         );
 
-        jTabbedPane1.addTab("End Mills", jPanel2);
+        container.addTab("End Mills", panelEndmills);
 
         picture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/Plain.jpg"))); // NOI18N
         picture.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -190,13 +250,100 @@ public class ToolCalc extends javax.swing.JFrame {
 
         jLabel4.setText("by: Jordan Jones");
 
+        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        LabelInitialRpm.setText("Initial Spindle Speed");
+
+        FieldInitialRpm.setEditable(false);
+
+        LabelFixedRpm.setText("Fixed Spindle Speed");
+
+        FieldFixedRpm.setEditable(false);
+
+        LabelCalculations.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        LabelCalculations.setText("Final Values");
+
+        LabelFeedRate.setText("Feed Rate");
+
+        FieldFeedRate.setEditable(false);
+
+        LabelPlungeRate.setText("Plunge Rate");
+
+        FieldPlungeRate.setEditable(false);
+
+        BtnCalculate.setText("Calculate");
+        BtnCalculate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                calculate(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(LabelInitialRpm)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(FieldInitialRpm))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(LabelFixedRpm)
+                            .addComponent(LabelCalculations)
+                            .addComponent(LabelFeedRate)
+                            .addComponent(LabelPlungeRate))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(FieldFixedRpm)
+                                    .addComponent(FieldFeedRate)
+                                    .addComponent(FieldPlungeRate)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(BtnCalculate)
+                                .addGap(11, 11, 11)))))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(1, 1, 1)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(LabelCalculations)
+                    .addComponent(BtnCalculate))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(LabelInitialRpm)
+                    .addComponent(FieldInitialRpm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(LabelFixedRpm)
+                    .addComponent(FieldFixedRpm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(LabelFeedRate)
+                    .addComponent(FieldFeedRate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(LabelPlungeRate)
+                    .addComponent(FieldPlungeRate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
+            .addComponent(container)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -221,73 +368,122 @@ public class ToolCalc extends javax.swing.JFrame {
                             .addComponent(jLabel3))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel4)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(container, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCounterboreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCounterboreActionPerformed
+        m_tool = 4;
         btnCenterDrill  .setSelected(false);
         btnCountersink  .setSelected(false);
         btnReamer       .setSelected(false);
-        btnCounterbore  .setSelected(true);
-        if(btnCounterbore.isSelected()){
+        if(!btnCounterbore.isSelected()){
             btnDrill    .setSelected(true);
+            m_tool = 1;
         }else{
             btnDrill    .setSelected(false);
         }
+        showMainPicture();
     }//GEN-LAST:event_btnCounterboreActionPerformed
 
     private void btnCenterDrillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCenterDrillActionPerformed
+        m_tool = 2;
         btnCountersink  .setSelected(false);
         btnReamer       .setSelected(false);
         btnCounterbore  .setSelected(false);
-        if(btnCenterDrill.isSelected()){
+        if(!btnCenterDrill.isSelected()){
             btnDrill    .setSelected(true);
+            m_tool = 1;
         }else{
             btnDrill    .setSelected(false);
         }
+        showMainPicture();
     }//GEN-LAST:event_btnCenterDrillActionPerformed
 
     private void btnCountersinkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCountersinkActionPerformed
+        m_tool = 3;
         btnCenterDrill  .setSelected(false);
         btnReamer       .setSelected(false);
         btnCounterbore  .setSelected(false);
-        if(btnCountersink.isSelected()){
+        if(!btnCountersink.isSelected()){
             btnDrill    .setSelected(true);
+            m_tool = 1;
         }else{
             btnDrill    .setSelected(false);
         }
+        showMainPicture();
     }//GEN-LAST:event_btnCountersinkActionPerformed
 
     private void btnReamerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReamerActionPerformed
+        m_tool = 4;
         btnCenterDrill  .setSelected(false);
         btnCountersink  .setSelected(false);
-
         btnCounterbore  .setSelected(false);
-        if(btnReamer.isSelected()){
+        if(!btnReamer.isSelected()){
             btnDrill    .setSelected(true);
+            m_tool = 1;
         }else{
             btnDrill    .setSelected(false);
         }
+        showMainPicture();
     }//GEN-LAST:event_btnReamerActionPerformed
 
     private void btnDrillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDrillActionPerformed
-         btnCenterDrill  .setSelected(false);
+        btnCenterDrill  .setSelected(false);
         btnCountersink  .setSelected(false);
         btnReamer       .setSelected(false);
         btnCounterbore  .setSelected(false);
-        picture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/drill/PlainDrill.jpg")));
+        btnDrill        .setSelected(true);
+        m_tool = 1;
+        showMainPicture();
     }//GEN-LAST:event_btnDrillActionPerformed
 
-    private void FieldDrillDiaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_FieldDrillDiaMouseClicked
-        // TODO add your handling code here:
-        System.out.println("Fill in Diameter");
-    }//GEN-LAST:event_FieldDrillDiaMouseClicked
+    private void mouseLeftBox(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mouseLeftBox
+        m_toolDim  = 1;
+        showMainPicture();
+    }//GEN-LAST:event_mouseLeftBox
 
+    private void panelDrillsComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_panelDrillsComponentShown
+        m_toolType = 1;
+        showMainPicture();
+    }//GEN-LAST:event_panelDrillsComponentShown
+
+    private void panelEndmillsComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_panelEndmillsComponentShown
+        m_toolType = 2;
+        showMainPicture();
+    }//GEN-LAST:event_panelEndmillsComponentShown
+
+    private void FieldDrillDiaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_FieldDrillDiaMouseEntered
+        m_toolDim   = 2;
+        showMainPicture();
+    }//GEN-LAST:event_FieldDrillDiaMouseEntered
+
+    private void calculate(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculate
+        
+    }//GEN-LAST:event_calculate
+
+    private void showMainPicture(){
+        if(1 == m_toolType){
+            if(1 == m_tool){
+                if(2 == m_toolDim){
+                    picture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/drill/DiaDrill.jpg")));                    
+                }else{
+                    picture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/drill/PlainDrill.jpg")));
+                }
+            }else if(2 == m_tool){
+                picture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/centerdrill/PlainCenterdrill.jpg")));
+            }else {
+                picture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/Plain.jpg")));
+            }
+        }else{
+            picture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/endmill/PlainEndmill.jpg")));
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -325,21 +521,32 @@ public class ToolCalc extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnCalculate;
     private javax.swing.JTextField FieldDrillDia;
+    private javax.swing.JTextField FieldFeedRate;
+    private javax.swing.JTextField FieldFixedRpm;
+    private javax.swing.JTextField FieldInitialRpm;
+    private javax.swing.JTextField FieldPlungeRate;
+    private javax.swing.JLabel LabelCalculations;
+    private javax.swing.JLabel LabelDrillCycle;
     private javax.swing.JLabel LabelDrillDia;
+    private javax.swing.JLabel LabelFeedRate;
+    private javax.swing.JLabel LabelFixedRpm;
+    private javax.swing.JLabel LabelInitialRpm;
+    private javax.swing.JLabel LabelPlungeRate;
     private javax.swing.JRadioButton btnCenterDrill;
     private javax.swing.JRadioButton btnCounterbore;
     private javax.swing.JRadioButton btnCountersink;
     private javax.swing.JRadioButton btnDrill;
     private javax.swing.JRadioButton btnReamer;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JTabbedPane container;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JPanel panelDrillCycle;
+    private javax.swing.JPanel panelDrills;
+    private javax.swing.JPanel panelEndmills;
     private javax.swing.JLabel picture;
     // End of variables declaration//GEN-END:variables
 }
