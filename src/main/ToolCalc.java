@@ -50,6 +50,18 @@ public class ToolCalc extends javax.swing.JFrame {
         showMainPicture();
     }
 
+    private boolean containsDot(String fieldString){
+        return fieldString.contains(".");
+    }
+    
+    private boolean isNumber(char valueIn){
+        return Character.isDigit(valueIn);
+    }
+ 
+    private boolean shouldConsume(javax.swing.JTextField fieldIn, char charIn){
+        return(!isNumber(charIn) && charIn != '.'|| charIn == '.' && containsDot(fieldIn.getText()));
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -511,6 +523,7 @@ public class ToolCalc extends javax.swing.JFrame {
         btnCenterDrill  .setSelected(false);
         btnCountersink  .setSelected(false);
         btnReamer       .setSelected(false);
+        
         if(!btnCounterbore.isSelected()){
             btnDrill    .setSelected(true);
             m_tool = 1;
@@ -525,12 +538,14 @@ public class ToolCalc extends javax.swing.JFrame {
         btnCountersink  .setSelected(false);
         btnReamer       .setSelected(false);
         btnCounterbore  .setSelected(false);
+        
         if(!btnCenterDrill.isSelected()){
             btnDrill    .setSelected(true);
             m_tool = 1;
         }else{
             btnDrill    .setSelected(false);
         }
+        
         showMainPicture();
     }//GEN-LAST:event_btnCenterDrillActionPerformed
 
@@ -539,12 +554,14 @@ public class ToolCalc extends javax.swing.JFrame {
         btnCenterDrill  .setSelected(false);
         btnReamer       .setSelected(false);
         btnCounterbore  .setSelected(false);
+        
         if(!btnCountersink.isSelected()){
             btnDrill    .setSelected(true);
             m_tool = 1;
         }else{
             btnDrill    .setSelected(false);
         }
+        
         showMainPicture();
     }//GEN-LAST:event_btnCountersinkActionPerformed
 
@@ -574,45 +591,46 @@ public class ToolCalc extends javax.swing.JFrame {
 
     private void panelDrillsComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_panelDrillsComponentShown
         m_toolType = 1;
-        btnCenterDrill  .setSelected(false);
-        btnCountersink  .setSelected(false);
-        btnReamer       .setSelected(false);
-        btnCounterbore  .setSelected(false);
-        btnDrill        .setSelected(true);
-        FieldDrillDia.setText("");
-        FieldCuttingSpeedDrill.setText("");
         m_tool = 1;
+        FieldSpindleSpeed   .setEnabled(true);
+        FieldPlungeRate     .setEnabled(false);
+        FieldFeedRate       .setEnabled(true);
+        btnCenterDrill      .setSelected(false);
+        btnCountersink      .setSelected(false);
+        btnReamer           .setSelected(false);
+        btnCounterbore      .setSelected(false);
+        btnDrill            .setSelected(true);
+        FieldDrillDia       .setText("");
+        FieldCuttingSpeedDrill.setText("");
+        FieldPlungeRate     .setText("");
+        FieldFeedRate       .setText("");
+        FieldSpindleSpeed   .setText("");        
         showMainPicture();
-        FieldPlungeRate.setEnabled(false);
-        FieldPlungeRate.setText("");
-        FieldFeedRate.setEnabled(true);
-        FieldFeedRate.setText("");
-        FieldSpindleSpeed.setEnabled(true);
-        FieldSpindleSpeed.setText("");
     }//GEN-LAST:event_panelDrillsComponentShown
 
     private void panelEndmillsComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_panelEndmillsComponentShown
         m_toolType = 2;
+        FieldPlungeRate         .setEnabled(true);
+        FieldFeedRate           .setEnabled(true);
+        FieldSpindleSpeed       .setEnabled(true);
+        FieldFeedRate           .setText("");        
+        FieldSpindleSpeed       .setText("");
+        FieldPlungeRate         .setText("");
         FieldCuttingSpeedEndMill.setText("");
-        FieldMillDia.setText("");
-        FieldNumberOfTeeth.setText("");
-        FieldPlungeRate.setEnabled(true);
-        FieldPlungeRate.setText("");
-        FieldFeedRate.setEnabled(true);
-        FieldFeedRate.setText("");
-        FieldSpindleSpeed.setEnabled(true);
-        FieldSpindleSpeed.setText("");
+        FieldMillDia            .setText("");
+        FieldNumberOfTeeth      .setText("");        
         showMainPicture();
     }//GEN-LAST:event_panelEndmillsComponentShown
 
     private void calculate(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculate
         boolean failed              = false;
-        double spindleSpeed         = .01;
-        double feedRate             = .01;
-        double plungeRate           = .01;
+        double spindleSpeed         = .0;
+        double feedRate             = .0;
+        double plungeRate           = .0;
         double diameter             = .0;
         double cutSpeed             = .0;
         double inchesPer            = .0;
+        double numOfTeeth           = .0;
         String spindleSpeedString   = "";
         String feedRateString       = "";
         String plungeRateString     = "";
@@ -650,25 +668,46 @@ public class ToolCalc extends javax.swing.JFrame {
             }
             
         }else if(2 == m_toolType){//endmills
+            try{
+                diameter        = Float.parseFloat(FieldMillDia             .getText());
+                cutSpeed        = Float.parseFloat(FieldCuttingSpeedEndMill .getText());
+                numOfTeeth      = Float.parseFloat(FieldNumberOfTeeth       .getText());
+                spindleSpeed    = (cutSpeed *12)/(Math.PI * diameter);
+                if(4000 <= spindleSpeed){
+                    spindleSpeed = 4000;
+                }
+                spindleSpeed    = (double) Math.round(spindleSpeed);
             
+                inchesPer       = diameter * .016 * numOfTeeth;
+                feedRate        = inchesPer * spindleSpeed;
+                plungeRate      = feedRate/2;
+            }catch(Exception e){
+                failed          = true;
+            }
         }
         
         if(!failed){
-            if(.01 != spindleSpeed){
+            if(.0 != spindleSpeed){
                 spindleSpeedString += spindleSpeed;
+            }else{
+                spindleSpeedString  = "Please";
             }  
             
-            if(.01 != feedRate){
+            if(.0 != feedRate){
                 feedRateString     += feedRate;
+            }else{
+                feedRateString      = "fill all";
             }
             
-            if(.01 != plungeRate){
+            if(.0 != plungeRate){
                 plungeRateString   += plungeRate;
+            }else{
+                plungeRateString    = "boxes";
             }
         }else{
-            spindleSpeedString  = "Please";
-            feedRateString      = "fill all";
-            plungeRateString    = "boxes";
+            spindleSpeedString      = "Please";
+            feedRateString          = "fill all";
+            plungeRateString        = "boxes";
         }
         FieldSpindleSpeed   .setText(spindleSpeedString);
         FieldFeedRate       .setText(feedRateString);
@@ -717,18 +756,6 @@ public class ToolCalc extends javax.swing.JFrame {
         showMainPicture();
     }//GEN-LAST:event_FieldNumberOfTeethFocusLost
 
-    private boolean containsDot(String fieldString){
-        return fieldString.contains(".");
-    }
-    
-    private boolean isNumber(char valueIn){
-        return Character.isDigit(valueIn);
-    }
- 
-    private boolean shouldConsume(javax.swing.JTextField fieldIn, char charIn){
-        return(!isNumber(charIn) && charIn != '.'|| charIn == '.' && containsDot(fieldIn.getText()));
-    }
-    
     private void FieldCuttingSpeedDrillKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_FieldCuttingSpeedDrillKeyTyped
         if(shouldConsume(FieldCuttingSpeedDrill,evt.getKeyChar())){
             evt.consume();
@@ -801,7 +828,7 @@ public class ToolCalc extends javax.swing.JFrame {
                 picture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/endmill/PlainEndmill.jpg")));
             }
         }else{
-            picture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/machining.gif")));
+                picture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/machining.gif")));
         }
     }
     /**

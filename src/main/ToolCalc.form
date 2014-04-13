@@ -68,7 +68,6 @@
                       <Component id="LabelAuthor" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="PanelCalculatedValues" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
                       <EmptySpace min="0" pref="11" max="32767" attributes="0"/>
@@ -106,7 +105,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" pref="433" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" pref="398" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -171,7 +170,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="FieldCuttingSpeedDrill" max="32767" attributes="0"/>
-                          <Component id="FieldDrillDia" pref="184" max="32767" attributes="0"/>
+                          <Component id="FieldDrillDia" pref="149" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="panelDrillCycle" min="-2" max="-2" attributes="0"/>
@@ -356,7 +355,7 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="FieldCuttingSpeedEndMill" pref="320" max="32767" attributes="0"/>
+                          <Component id="FieldCuttingSpeedEndMill" pref="285" max="32767" attributes="0"/>
                           <Component id="FieldNumberOfTeeth" max="32767" attributes="0"/>
                           <Component id="FieldMillDia" max="32767" attributes="0"/>
                       </Group>
