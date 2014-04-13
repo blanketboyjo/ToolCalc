@@ -21,7 +21,7 @@ public class ToolCalc extends javax.swing.JFrame {
      */
     private int m_toolType  = 1;
     
-    /*m_tool (unused my endmill panel
+    /*m_tool (unused by endmill panel
      * 1 = drill
      * 2 = centerdrill
      * 3 = countersink
@@ -114,7 +114,7 @@ public class ToolCalc extends javax.swing.JFrame {
         AreaDisclaimer.setColumns(20);
         AreaDisclaimer.setLineWrap(true);
         AreaDisclaimer.setRows(5);
-        AreaDisclaimer.setText("Thank you for using this application to calculate your speeds and feeds. There are a few disclaimers that are associated with this application:\n* This calculator is based on ideal speeds and feeds; in practice feed and plunge rate should be slower than this calculator.\n* The user should still double check the calculated numbers.\n* This calculator uses (cut speed * 12)/(tool diameter * PI) to calculate initial rpm then modifies based on tool path.\n* This calculator uses (.016 * tool diameter) to get feed per revolution of drills.\n* This calculatr uses  (.016 * tool diameter * number of teeth) to get cutting feed of endmills.\n* This calculator uses (feed per revolution * final rpm) to get the initial feed rate that is modified based on tool path.\n* This calculator uses (feed rate / 2) to get plunge rate of endmills.\n");
+        AreaDisclaimer.setText("Thank you for using this application to calculate your speeds and feeds. There are a few disclaimers that are associated with this application:\n* THE REAMER CALCULATION IS WRONG DO NOT USE IT!!!\n* This calculator is based on ideal speeds and feeds; in practice feed and plunge rate should be slower than this calculator.\n* The user should still double check the calculated numbers.\n* This calculator uses (cut speed * 12)/(tool diameter * PI) to calculate initial rpm then modifies based on tool path.\n* This calculator uses (.016 * tool diameter) to get feed per revolution of drills.\n* This calculatr uses  (.016 * tool diameter * number of teeth) to get cutting feed of endmills.\n* This calculator uses (feed per revolution * final rpm) to get the initial feed rate that is modified based on tool path.\n* This calculator uses (feed rate / 2) to get plunge rate of endmills.\n");
         AreaDisclaimer.setWrapStyleWord(true);
         AreaDisclaimer.setFocusable(false);
         jScrollPane1.setViewportView(AreaDisclaimer);
@@ -606,11 +606,74 @@ public class ToolCalc extends javax.swing.JFrame {
     }//GEN-LAST:event_panelEndmillsComponentShown
 
     private void calculate(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculate
+        boolean failed              = false;
+        double spindleSpeed         = .01;
+        double feedRate             = .01;
+        double plungeRate           = .01;
+        double diameter             = .0;
+        double cutSpeed             = .0;
+        double inchesPer            = .0;
+        String spindleSpeedString   = "";
+        String feedRateString       = "";
+        String plungeRateString     = "";
         if(1 == m_toolType){//drills
+            try{
+                diameter        = Float.parseFloat(FieldDrillDia.getText());
+                cutSpeed        = Float.parseFloat(FieldCuttingSpeedDrill.getText());
+                spindleSpeed    = (cutSpeed * 12/(Math.PI * diameter));
+                
+                if(2 == m_tool || 3 == m_tool){
+                    spindleSpeed = spindleSpeed/4;
+                }else if(4 == m_tool || 5 == m_tool){
+                    spindleSpeed = spindleSpeed/2;
+                }
+
+                if(4000 <= spindleSpeed){
+                    spindleSpeed = 4000;
+                }
+                
+                spindleSpeed    = (double) Math.round(spindleSpeed);
+                inchesPer       = diameter * .016;
+                feedRate        = inchesPer * spindleSpeed;
+                
+                if(2 == m_tool || 3 == m_tool){
+                    feedRate    = feedRate * 2;
+                }else if(5 == m_tool){
+                    feedRate    = feedRate * 3;
+                }
+                
+                
+                feedRate = (double) Math.round(feedRate * 100)/100;
+                
+            }catch(Exception e){
+                failed          = true;
+            }
             
         }else if(2 == m_toolType){//endmills
             
         }
+        
+        if(!failed){
+            if(.01 != spindleSpeed){
+                spindleSpeedString += spindleSpeed;
+            }  
+            
+            if(.01 != feedRate){
+                feedRateString     += feedRate;
+            }
+            
+            if(.01 != plungeRate){
+                plungeRateString   += plungeRate;
+            }
+        }else{
+            spindleSpeedString  = "Please";
+            feedRateString      = "fill all";
+            plungeRateString    = "boxes";
+        }
+        FieldSpindleSpeed   .setText(spindleSpeedString);
+        FieldFeedRate       .setText(feedRateString);
+        FieldPlungeRate     .setText(plungeRateString);
+        
     }//GEN-LAST:event_calculate
 
     private void FieldDrillDiaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_FieldDrillDiaFocusGained
@@ -636,8 +699,11 @@ public class ToolCalc extends javax.swing.JFrame {
     private void DisclaimerComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_DisclaimerComponentShown
         m_toolType = 0;
         FieldPlungeRate.setEnabled(false);
+        FieldPlungeRate.setText("");
         FieldFeedRate.setEnabled(false);
+        FieldFeedRate.setText("");
         FieldSpindleSpeed.setEnabled(false);
+        FieldSpindleSpeed.setText("");
         showMainPicture(); 
     }//GEN-LAST:event_DisclaimerComponentShown
 
