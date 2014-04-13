@@ -28,22 +28,24 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="container" max="32767" attributes="0"/>
+          <Component id="container" pref="0" max="32767" attributes="0"/>
           <Group type="102" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
+                      <Component id="LabelTitle" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jPanel1" max="32767" attributes="0"/>
+                      <Component id="LabelVersion" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
-                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                      <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="PanelCalculatedValues" max="32767" attributes="0"/>
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              <Component id="LabelAuthor" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -54,19 +56,23 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="1" attributes="0">
+          <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="picture" min="-2" pref="201" max="-2" attributes="0"/>
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="LabelTitle" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="LabelVersion" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                      <Component id="LabelAuthor" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jPanel1" max="32767" attributes="0"/>
+                      <Component id="PanelCalculatedValues" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="0" pref="11" max="32767" attributes="0"/>
+                      <Component id="picture" min="-2" pref="201" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -83,6 +89,61 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
       <SubComponents>
+        <Container class="javax.swing.JPanel" name="Disclaimer">
+          <Events>
+            <EventHandler event="componentShown" listener="java.awt.event.ComponentListener" parameters="java.awt.event.ComponentEvent" handler="DisclaimerComponentShown"/>
+          </Events>
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+              <JTabbedPaneConstraints tabName="Startup">
+                <Property name="tabTitle" type="java.lang.String" value="Startup"/>
+              </JTabbedPaneConstraints>
+            </Constraint>
+          </Constraints>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jScrollPane1" pref="433" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jScrollPane1" pref="156" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+              <AuxValues>
+                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+              </AuxValues>
+
+              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+              <SubComponents>
+                <Component class="javax.swing.JTextArea" name="AreaDisclaimer">
+                  <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
+                    <Property name="columns" type="int" value="20"/>
+                    <Property name="lineWrap" type="boolean" value="true"/>
+                    <Property name="rows" type="int" value="5"/>
+                    <Property name="text" type="java.lang.String" value="Thank you for using this application to calculate your speeds and feeds. There are a few disclaimers that are associated with this application:&#xa;* This calculator is based on ideal speeds and feeds; in practice feed and plunge rate should be slower than this calculator.&#xa;* The user should still double check the calculated numbers.&#xa;* This calculator uses (cut speed * 12)/(tool diameter * PI) to calculate initial rpm then modifies based on tool path.&#xa;* This calculator uses (.016 * tool diameter) to get feed per revolution of drills.&#xa;* This calculatr uses  (.016 * tool diameter * number of teeth) to get cutting feed of endmills.&#xa;* This calculator uses (feed per revolution * final rpm) to get the initial feed rate that is modified based on tool path.&#xa;* This calculator uses (feed rate / 2) to get plunge rate of endmills.&#xa;"/>
+                    <Property name="wrapStyleWord" type="boolean" value="true"/>
+                    <Property name="focusable" type="boolean" value="false"/>
+                  </Properties>
+                </Component>
+              </SubComponents>
+            </Container>
+          </SubComponents>
+        </Container>
         <Container class="javax.swing.JPanel" name="panelDrills">
           <Properties>
             <Property name="focusable" type="boolean" value="false"/>
@@ -103,9 +164,15 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="LabelDrillDia" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="LabelDrillDia" min="-2" max="-2" attributes="0"/>
+                          <Component id="LabelCuttingSpeedDrill" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="FieldDrillDia" pref="174" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="FieldCuttingSpeedDrill" max="32767" attributes="0"/>
+                          <Component id="FieldDrillDia" pref="184" max="32767" attributes="0"/>
+                      </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="panelDrillCycle" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -118,9 +185,16 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="panelDrillCycle" min="-2" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="LabelDrillDia" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="FieldDrillDia" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="LabelDrillDia" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="FieldDrillDia" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="FieldCuttingSpeedDrill" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="LabelCuttingSpeedDrill" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
@@ -138,6 +212,7 @@
               <Events>
                 <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="FieldDrillDiaFocusGained"/>
                 <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="FieldDrillDiaFocusLost"/>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="FieldDrillDiaKeyTyped"/>
               </Events>
             </Component>
             <Container class="javax.swing.JPanel" name="panelDrillCycle">
@@ -242,6 +317,16 @@
                 </Component>
               </SubComponents>
             </Container>
+            <Component class="javax.swing.JTextField" name="FieldCuttingSpeedDrill">
+              <Events>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="FieldCuttingSpeedDrillKeyTyped"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="LabelCuttingSpeedDrill">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Cutting Speed (SFM)"/>
+              </Properties>
+            </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="panelEndmills">
@@ -262,12 +347,20 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="LabeMillDia" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="LabeMillDia" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="LabelCuttingSpeedEndmill" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="LabelNumberOfTeeth" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="FieldMillDia" pref="174" max="32767" attributes="0"/>
-                      <EmptySpace min="-2" pref="146" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="FieldCuttingSpeedEndMill" pref="320" max="32767" attributes="0"/>
+                          <Component id="FieldNumberOfTeeth" max="32767" attributes="0"/>
+                          <Component id="FieldMillDia" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -279,7 +372,17 @@
                           <Component id="LabeMillDia" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="FieldMillDia" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="147" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="FieldCuttingSpeedEndMill" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="LabelCuttingSpeedEndmill" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="FieldNumberOfTeeth" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="LabelNumberOfTeeth" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace pref="95" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -294,6 +397,29 @@
               <Events>
                 <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="FieldMillDiaFocusGained"/>
                 <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="FieldMillDiaFocusLost"/>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="FieldMillDiaKeyTyped"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JTextField" name="FieldCuttingSpeedEndMill">
+              <Events>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="FieldCuttingSpeedEndMillKeyTyped"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="LabelCuttingSpeedEndmill">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Cutting Speed (SFM)"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="LabelNumberOfTeeth">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Number of Teeth"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="FieldNumberOfTeeth">
+              <Events>
+                <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="FieldNumberOfTeethFocusGained"/>
+                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="FieldNumberOfTeethFocusLost"/>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="FieldNumberOfTeethKeyTyped"/>
               </Events>
             </Component>
           </SubComponents>
@@ -313,7 +439,7 @@
         <Property name="focusable" type="boolean" value="false"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel2">
+    <Component class="javax.swing.JLabel" name="LabelTitle">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Tahoma" size="24" style="1"/>
@@ -321,7 +447,7 @@
         <Property name="text" type="java.lang.String" value="Tool Calulator"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel3">
+    <Component class="javax.swing.JLabel" name="LabelVersion">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Tahoma" size="9" style="0"/>
@@ -329,12 +455,12 @@
         <Property name="text" type="java.lang.String" value="v1.0"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel4">
+    <Component class="javax.swing.JLabel" name="LabelAuthor">
       <Properties>
         <Property name="text" type="java.lang.String" value="by: Jordan Jones"/>
       </Properties>
     </Component>
-    <Container class="javax.swing.JPanel" name="jPanel1">
+    <Container class="javax.swing.JPanel" name="PanelCalculatedValues">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
@@ -346,39 +472,39 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="LabelInitialRpm" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="FieldInitialRpm" max="32767" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
+                          <Component id="LabelMaxedRpm" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="LabelFixedRpm" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="LabelCalculations" min="-2" max="-2" attributes="0"/>
-                              <Component id="LabelFeedRate" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="LabelPlungeRate" alignment="0" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                      <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="FieldFixedRpm" max="32767" attributes="0"/>
-                                      <Component id="FieldFeedRate" max="32767" attributes="0"/>
-                                      <Component id="FieldPlungeRate" alignment="0" max="32767" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <Group type="102" alignment="1" attributes="0">
+                                  <Component id="LabelCalculations" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
                                   <Component id="BtnCalculate" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
                               </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="LabeSpindleSpeed" max="32767" attributes="0"/>
+                                      <Component id="LabelPlungeRate" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="LabelFeedRate" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="FieldPlungeRate" max="32767" attributes="0"/>
+                                      <Component id="FieldFeedRate" max="32767" attributes="0"/>
+                                      <Component id="FieldSpindleSpeed" max="32767" attributes="0"/>
+                                  </Group>
+                              </Group>
                           </Group>
+                          <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -392,46 +518,33 @@
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="LabelInitialRpm" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="FieldInitialRpm" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="LabeSpindleSpeed" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="FieldSpindleSpeed" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="LabelFixedRpm" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="FieldFixedRpm" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="LabelFeedRate" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="FieldFeedRate" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="LabelFeedRate" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="LabelPlungeRate" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="FieldPlungeRate" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="LabelPlungeRate" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="LabelMaxedRpm" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JLabel" name="LabelInitialRpm">
+        <Component class="javax.swing.JLabel" name="LabeSpindleSpeed">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Initial Spindle Speed"/>
+            <Property name="text" type="java.lang.String" value="Spindle Speed"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="FieldInitialRpm">
-          <Properties>
-            <Property name="editable" type="boolean" value="false"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="LabelFixedRpm">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Fixed Spindle Speed"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="FieldFixedRpm">
+        <Component class="javax.swing.JTextField" name="FieldSpindleSpeed">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
           </Properties>
@@ -446,7 +559,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="LabelFeedRate">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Feed Rate"/>
+            <Property name="text" type="java.lang.String" value="Feed Rate (IPM)"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="FieldFeedRate">
@@ -456,7 +569,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="LabelPlungeRate">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Plunge Rate"/>
+            <Property name="text" type="java.lang.String" value="Plunge Rate (IPM)"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="FieldPlungeRate">
@@ -472,6 +585,11 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="calculate"/>
           </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="LabelMaxedRpm">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Spindle Speed maxed to 4000"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>
