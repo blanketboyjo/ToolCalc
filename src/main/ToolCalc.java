@@ -578,19 +578,30 @@ public class ToolCalc extends javax.swing.JFrame {
         btnCountersink  .setSelected(false);
         btnReamer       .setSelected(false);
         btnCounterbore  .setSelected(false);
-        btnDrill        .setSelected(true);        
+        btnDrill        .setSelected(true);
+        FieldDrillDia.setText("");
+        FieldCuttingSpeedDrill.setText("");
         m_tool = 1;
         showMainPicture();
         FieldPlungeRate.setEnabled(false);
+        FieldPlungeRate.setText("");
         FieldFeedRate.setEnabled(true);
+        FieldFeedRate.setText("");
         FieldSpindleSpeed.setEnabled(true);
+        FieldSpindleSpeed.setText("");
     }//GEN-LAST:event_panelDrillsComponentShown
 
     private void panelEndmillsComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_panelEndmillsComponentShown
         m_toolType = 2;
+        FieldCuttingSpeedEndMill.setText("");
+        FieldMillDia.setText("");
+        FieldNumberOfTeeth.setText("");
         FieldPlungeRate.setEnabled(true);
+        FieldPlungeRate.setText("");
         FieldFeedRate.setEnabled(true);
+        FieldFeedRate.setText("");
         FieldSpindleSpeed.setEnabled(true);
+        FieldSpindleSpeed.setText("");
         showMainPicture();
     }//GEN-LAST:event_panelEndmillsComponentShown
 
