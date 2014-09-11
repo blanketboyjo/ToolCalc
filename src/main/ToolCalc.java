@@ -6,15 +6,20 @@
 
 package main;
 
+import Jordan.RedShift.Util.Uni.RedTimer;
+import com.sun.speech.freetts.Voice;
+import com.sun.speech.freetts.VoiceManager;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Jordan
  */
 public class ToolCalc extends javax.swing.JFrame {
+    private final String password = "On Your Own";
     /*m_toolType
      * 1 = drills
      * 2 = endmills
@@ -37,6 +42,12 @@ public class ToolCalc extends javax.swing.JFrame {
      */
     private int m_toolDim   = 1;
     
+    /*m_enabled
+     * This is used to check if the timer has been diminished or 
+     * the user has the passcode
+     */
+    private boolean m_enabled = false;
+    
     /**
      * Creates new form ToolCalc
      */
@@ -48,6 +59,10 @@ public class ToolCalc extends javax.swing.JFrame {
     private void m_init(){
         btnDrill.setSelected(true);
         showMainPicture();
+    }
+    
+    public void enable(){
+        m_enabled = true;
     }
 
     private boolean containsDot(String fieldString){
@@ -115,6 +130,11 @@ public class ToolCalc extends javax.swing.JFrame {
         setResizable(false);
 
         container.setFocusable(false);
+        container.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                containerStateChanged(evt);
+            }
+        });
 
         Disclaimer.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
@@ -126,7 +146,7 @@ public class ToolCalc extends javax.swing.JFrame {
         AreaDisclaimer.setColumns(20);
         AreaDisclaimer.setLineWrap(true);
         AreaDisclaimer.setRows(5);
-        AreaDisclaimer.setText("Thank you for using this application to calculate your speeds and feeds. There are a few disclaimers that are associated with this application:\n* THE REAMER CALCULATION IS WRONG DO NOT USE IT!!!\n* This calculator is based on ideal speeds and feeds; in practice feed and plunge rate should be slower than this calculator.\n* The user should still double check the calculated numbers.\n* This calculator uses (cut speed * 12)/(tool diameter * PI) to calculate initial rpm then modifies based on tool path.\n* This calculator uses (.016 * tool diameter) to get feed per revolution of drills.\n* This calculatr uses  (.016 * tool diameter * number of teeth) to get cutting feed of endmills.\n* This calculator uses (feed per revolution * final rpm) to get the initial feed rate that is modified based on tool path.\n* This calculator uses (feed rate / 2) to get plunge rate of endmills.\n");
+        AreaDisclaimer.setText("Thank you for using this application to calculate your speeds and feeds. There are a few disclaimers that are associated with this application:\n* THE REAMER CALCULATION IS WRONG DO NOT USE IT!!!\n* This calculator is based on ideal speeds and feeds; in practice feed and plunge rate should be slower than this calculator.\n* The user should still double check the calculated numbers.\n* This calculator uses (cut speed * 12)/(tool diameter * PI) to calculate initial rpm then modifies based on tool path.\n* This calculator uses (.016 * tool diameter) to get feed per revolution of drills.\n* This calculatr uses  (.008 * tool diameter * number of teeth) to get cutting feed of endmills.\n* This calculator uses (feed per revolution * final rpm) to get the initial feed rate that is modified based on tool path.\n\n");
         AreaDisclaimer.setWrapStyleWord(true);
         AreaDisclaimer.setFocusable(false);
         jScrollPane1.setViewportView(AreaDisclaimer);
@@ -137,12 +157,12 @@ public class ToolCalc extends javax.swing.JFrame {
             DisclaimerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(DisclaimerLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 433, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 398, Short.MAX_VALUE)
                 .addContainerGap())
         );
         DisclaimerLayout.setVerticalGroup(
             DisclaimerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(DisclaimerLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DisclaimerLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
                 .addContainerGap())
@@ -177,6 +197,7 @@ public class ToolCalc extends javax.swing.JFrame {
         panelDrillCycle.setFocusable(false);
 
         btnDrill.setText("Drill");
+        btnDrill.setFocusable(false);
         btnDrill.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDrillActionPerformed(evt);
@@ -184,6 +205,7 @@ public class ToolCalc extends javax.swing.JFrame {
         });
 
         btnReamer.setText("Reamer");
+        btnReamer.setFocusable(false);
         btnReamer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnReamerActionPerformed(evt);
@@ -191,6 +213,7 @@ public class ToolCalc extends javax.swing.JFrame {
         });
 
         btnCounterbore.setText("Counterbore");
+        btnCounterbore.setFocusable(false);
         btnCounterbore.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCounterboreActionPerformed(evt);
@@ -198,6 +221,7 @@ public class ToolCalc extends javax.swing.JFrame {
         });
 
         btnCountersink.setText("Countersink");
+        btnCountersink.setFocusable(false);
         btnCountersink.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCountersinkActionPerformed(evt);
@@ -205,6 +229,7 @@ public class ToolCalc extends javax.swing.JFrame {
         });
 
         btnCenterDrill.setText("Center Drill");
+        btnCenterDrill.setFocusable(false);
         btnCenterDrill.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCenterDrillActionPerformed(evt);
@@ -270,7 +295,7 @@ public class ToolCalc extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelDrillsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(FieldCuttingSpeedDrill)
-                    .addComponent(FieldDrillDia, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE))
+                    .addComponent(FieldDrillDia, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelDrillCycle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -292,7 +317,7 @@ public class ToolCalc extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        container.addTab("Drill Bit", panelDrills);
+        container.addTab("Drills", panelDrills);
 
         panelEndmills.setFocusable(false);
         panelEndmills.addComponentListener(new java.awt.event.ComponentAdapter() {
@@ -353,7 +378,7 @@ public class ToolCalc extends javax.swing.JFrame {
                     .addComponent(LabelNumberOfTeeth))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelEndmillsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(FieldCuttingSpeedEndMill, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
+                    .addComponent(FieldCuttingSpeedEndMill, javax.swing.GroupLayout.DEFAULT_SIZE, 285, Short.MAX_VALUE)
                     .addComponent(FieldNumberOfTeeth)
                     .addComponent(FieldMillDia))
                 .addContainerGap())
@@ -386,7 +411,7 @@ public class ToolCalc extends javax.swing.JFrame {
         LabelTitle.setText("Tool Calulator");
 
         LabelVersion.setFont(new java.awt.Font("Tahoma", 0, 9)); // NOI18N
-        LabelVersion.setText("v1.0");
+        LabelVersion.setText("v1.1");
 
         LabelAuthor.setText("by: Jordan Jones");
 
@@ -506,8 +531,7 @@ public class ToolCalc extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(LabelAuthor)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(PanelCalculatedValues, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(PanelCalculatedValues, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 11, Short.MAX_VALUE)
                         .addComponent(picture, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -590,35 +614,35 @@ public class ToolCalc extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDrillActionPerformed
 
     private void panelDrillsComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_panelDrillsComponentShown
-        m_toolType = 1;
-        m_tool = 1;
-        FieldSpindleSpeed   .setEnabled(true);
-        FieldPlungeRate     .setEnabled(false);
-        FieldFeedRate       .setEnabled(true);
-        btnCenterDrill      .setSelected(false);
-        btnCountersink      .setSelected(false);
-        btnReamer           .setSelected(false);
-        btnCounterbore      .setSelected(false);
-        btnDrill            .setSelected(true);
-        FieldDrillDia       .setText("");
-        FieldCuttingSpeedDrill.setText("");
-        FieldPlungeRate     .setText("");
-        FieldFeedRate       .setText("");
-        FieldSpindleSpeed   .setText("");        
+            m_toolType = 1;
+            m_tool = 1;
+            FieldSpindleSpeed   .setEnabled(true);
+            FieldPlungeRate     .setEnabled(false);
+            FieldFeedRate       .setEnabled(true);
+            btnCenterDrill      .setSelected(false);
+            btnCountersink      .setSelected(false);
+            btnReamer           .setSelected(false);
+            btnCounterbore      .setSelected(false);
+            btnDrill            .setSelected(true);
+            FieldDrillDia       .setText("");
+            FieldCuttingSpeedDrill.setText("");
+            FieldPlungeRate     .setText("");
+            FieldFeedRate       .setText("");
+            FieldSpindleSpeed   .setText("");   
         showMainPicture();
     }//GEN-LAST:event_panelDrillsComponentShown
 
     private void panelEndmillsComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_panelEndmillsComponentShown
-        m_toolType = 2;
-        FieldPlungeRate         .setEnabled(true);
-        FieldFeedRate           .setEnabled(true);
-        FieldSpindleSpeed       .setEnabled(true);
-        FieldFeedRate           .setText("");        
-        FieldSpindleSpeed       .setText("");
-        FieldPlungeRate         .setText("");
-        FieldCuttingSpeedEndMill.setText("");
-        FieldMillDia            .setText("");
-        FieldNumberOfTeeth      .setText("");        
+            m_toolType = 2;
+            FieldPlungeRate         .setEnabled(true);
+            FieldFeedRate           .setEnabled(true);
+            FieldSpindleSpeed       .setEnabled(true);
+            FieldFeedRate           .setText("");        
+            FieldSpindleSpeed       .setText("");
+            FieldPlungeRate         .setText("");
+            FieldCuttingSpeedEndMill.setText("");
+            FieldMillDia            .setText("");
+            FieldNumberOfTeeth      .setText("");       
         showMainPicture();
     }//GEN-LAST:event_panelEndmillsComponentShown
 
@@ -642,8 +666,10 @@ public class ToolCalc extends javax.swing.JFrame {
                 
                 if(2 == m_tool || 3 == m_tool){
                     spindleSpeed = spindleSpeed/4;
-                }else if(4 == m_tool || 5 == m_tool){
+                }else if(4 == m_tool){
                     spindleSpeed = spindleSpeed/2;
+                }else if(5 == m_tool){
+                    spindleSpeed  = cutSpeed *3.82/diameter;
                 }
 
                 if(4000 <= spindleSpeed){
@@ -656,10 +682,7 @@ public class ToolCalc extends javax.swing.JFrame {
                 
                 if(2 == m_tool || 3 == m_tool){
                     feedRate    = feedRate * 2;
-                }else if(5 == m_tool){
-                    feedRate    = feedRate * 3;
                 }
-                
                 
                 feedRate = (double) Math.round(feedRate * 100)/100;
                 
@@ -678,7 +701,7 @@ public class ToolCalc extends javax.swing.JFrame {
                 }
                 spindleSpeed    = (double) Math.round(spindleSpeed);
             
-                inchesPer       = diameter * .016 * numOfTeeth;
+                inchesPer       = diameter * .008 * numOfTeeth;
                 feedRate        = inchesPer * spindleSpeed;
                 plungeRate      = feedRate/2;
             }catch(Exception e){
@@ -712,7 +735,7 @@ public class ToolCalc extends javax.swing.JFrame {
         FieldSpindleSpeed   .setText(spindleSpeedString);
         FieldFeedRate       .setText(feedRateString);
         FieldPlungeRate     .setText(plungeRateString);
-        
+     
     }//GEN-LAST:event_calculate
 
     private void FieldDrillDiaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_FieldDrillDiaFocusGained
@@ -786,6 +809,20 @@ public class ToolCalc extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_FieldNumberOfTeethKeyTyped
 
+    private void containerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_containerStateChanged
+        // TODO add your handling code here:
+//        System.out.println(container.getSelectedIndex());
+        if(0 != container.getSelectedIndex()){
+            if(!m_enabled){
+                container.setSelectedIndex(0);
+                String s = (String)JOptionPane.showInputDialog(null,"Try reading the disclaimers \n" + "Password:");
+                if(s.toUpperCase().matches(password.toUpperCase())){
+                    enable();
+                }
+            }
+        }
+    }//GEN-LAST:event_containerStateChanged
+
     private void showMainPicture(){
         if(1 == m_toolType){
             if(1 == m_tool){
@@ -828,7 +865,7 @@ public class ToolCalc extends javax.swing.JFrame {
                 picture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/endmill/PlainEndmill.jpg")));
             }
         }else{
-                picture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/machining.gif")));
+            picture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/machining.gif")));
         }
     }
     /**
@@ -860,11 +897,23 @@ public class ToolCalc extends javax.swing.JFrame {
 
         /* Create and display the form */
         final ToolCalc mainPanel = new ToolCalc();
+        boolean readTiming = false;
+        RedTimer readTimer = new RedTimer(20000);
+        readTimer.begin();
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                  mainPanel.setVisible(true);
+                 JOptionPane.showMessageDialog(null,    "New To Version 1.1! \n" +
+                                                        "Modified Endmill calculator to correct speeds \n"+
+                                                        "Only text fields are focusable");
             }
         });
+       while(!mainPanel.m_enabled){
+             if(readTimer.hasPeriodPassed()){
+                 mainPanel.enable();
+                 JOptionPane.showMessageDialog(null, "Remember Password: On your own");
+             }
+       }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
