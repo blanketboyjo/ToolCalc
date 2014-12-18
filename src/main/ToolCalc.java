@@ -7,8 +7,6 @@
 package main;
 
 import Jordan.RedShift.Util.Uni.RedTimer;
-import com.sun.speech.freetts.Voice;
-import com.sun.speech.freetts.VoiceManager;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
